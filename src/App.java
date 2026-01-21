@@ -1,76 +1,98 @@
 import java.util.Scanner;
 
-/**
- * Instructions:
- * - Complete the WeeklyData.java class first.
- * - Use this App class to collect user input and test your WeeklyData methods.
- * - Follow all TODOs carefully.
- * - Do NOT hard-code values — use loops and method calls.
- */
 public class App {
 
     public static void main(String[] args) {
 
         // -------------------------------------------------------------
-        // TODO 1: Create a Scanner for user input
+        // Step 1: Create a Scanner for user input
         // -------------------------------------------------------------
-
-
-        // -------------------------------------------------------------
-        // TODO 2: Give information about your program
-        //         Ask the user about their goals (if applicable)
-        // -------------------------------------------------------------
-
+        Scanner scanner = new Scanner(System.in);
 
         // -------------------------------------------------------------
-        // TODO 3: Create an array to hold 7 days of data
-        //         Use an appropriate data type (int or double)
-        //         Name the array weekData
+        // Step 2: Give information about your program
         // -------------------------------------------------------------
-
-
-        // -------------------------------------------------------------
-        // TODO 4: Use a for loop to collect data for each day of the week
-        //         Prompt example:
-        //         "Enter <data type> for day X: "
-        //
-        //         Include input validation:
-        //         - Use a while loop to prevent negative values
-        //         - Re-prompt if the value is invalid
-        // -------------------------------------------------------------
-
+        System.out.println("Welcome to the Screen Time and Sleep Quality Tracker!");
+        System.out.println("This app helps you track your daily screen time and sleep quality.");
+        System.out.println("Let's get started!");
 
         // -------------------------------------------------------------
-        // TODO 5: Create a WeeklyData object
-        //         Pass the weekData array into the constructor
+        // Step 3: Create an array to hold 7 days of data
         // -------------------------------------------------------------
-
-
-        // -------------------------------------------------------------
-        // TODO 6: Display the results of the analysis
-        //         Call methods from WeeklyData to display:
-        //         - Total
-        //         - Average
-        //         - Minimum
-        //         - Maximum
-        //
-        //         Use clear labels and formatted output if needed
-        // -------------------------------------------------------------
-
+        double[] screenTime = new double[7];
+        double[] sleepQuality = new double[7];
 
         // -------------------------------------------------------------
-        // TODO 7: Display the full week of data
-        //         Use the toString() method from WeeklyData
+        // Step 4: Collect data for screen time
         // -------------------------------------------------------------
-
+        System.out.println("\nEnter your daily screen time (in hours):");
+        for (int i = 0; i < 7; i++) {
+            System.out.print("Day " + (i + 1) + ": ");
+            screenTime[i] = getValidInput(scanner);
+        }
 
         // -------------------------------------------------------------
-        // TODO 8: Give the user insights about their week
-        //         --> "You need to drink more water next week!"
-        //         --> "You were very hydrated this week!"
-        //         --> etc.
+        // Step 4: Collect data for sleep quality
         // -------------------------------------------------------------
+        System.out.println("\nEnter your daily sleep quality (scale of 1-10):");
+        for (int i = 0; i < 7; i++) {
+            System.out.print("Day " + (i + 1) + ": ");
+            sleepQuality[i] = getValidInput(scanner);
+        }
 
+        // -------------------------------------------------------------
+        // Step 5: Create WeeklyData objects
+        // -------------------------------------------------------------
+        WeeklyData screenTimeData = new WeeklyData(screenTime, "Screen Time");
+        WeeklyData sleepQualityData = new WeeklyData(sleepQuality, "Sleep Quality");
 
+        // -------------------------------------------------------------
+        // Step 6: Display results for screen time
+        // -------------------------------------------------------------
+        System.out.println("\nScreen Time Analysis:");
+        System.out.println("Total: " + screenTimeData.getTotal() + " hours");
+        System.out.println("Average: " + screenTimeData.getAverage() + " hours/day");
+        System.out.println("Max: " + screenTimeData.getMax() + " hours");
+        System.out.println("Min: " + screenTimeData.getMin() + " hours");
+
+        // -------------------------------------------------------------
+        // Step 7: Display results for sleep quality
+        // -------------------------------------------------------------
+        System.out.println("\nSleep Quality Analysis:");
+        System.out.println("Total: " + sleepQualityData.getTotal());
+        System.out.println("Average: " + sleepQualityData.getAverage() + "/day");
+        System.out.println("Max: " + sleepQualityData.getMax());
+        System.out.println("Min: " + sleepQualityData.getMin());
+
+        // -------------------------------------------------------------
+        // Step 8: Mood Analysis
+        // -------------------------------------------------------------
+        System.out.println("\nMood Analysis:");
+        if (screenTimeData.getAverage() > 7.0) {
+            System.out.println("High screen time may negatively affect your mood.");
+        } else {
+            System.out.println("Screen time is within a healthy range.");
+        }
+        if (sleepQualityData.getAverage() < 6.0) {
+            System.out.println("Low sleep quality may negatively affect your mood.");
+        } else {
+            System.out.println("Sleep quality is within a healthy range.");
+        }
+
+        // Close the scanner
+        scanner.close();
+    }
+
+    // Helper method to validate input
+    private static double getValidInput(Scanner scanner) {
+        double value;
+        while (true) {
+            value = scanner.nextDouble();
+            if (value >= 0) {
+                break;
+            }
+            System.out.print("Invalid input. Please enter a non-negative value: ");
+        }
+        return value;
     }
 }
