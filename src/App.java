@@ -25,10 +25,10 @@ public class App {
         // -------------------------------------------------------------
         // Step 4: Collect data for screen time
         // -------------------------------------------------------------
-        System.out.println("\nEnter your daily screen time (in hours):");
+        System.out.println("\nEnter your daily screen time (in hours, 0-24):");
         for (int i = 0; i < 7; i++) {
             System.out.print("Day " + (i + 1) + ": ");
-            screenTime[i] = getValidInput(scanner);
+            screenTime[i] = getValidInput(scanner, 0, 24); // Validate input for screen time
         }
 
         // -------------------------------------------------------------
@@ -37,7 +37,7 @@ public class App {
         System.out.println("\nEnter your daily sleep quality (scale of 1-10):");
         for (int i = 0; i < 7; i++) {
             System.out.print("Day " + (i + 1) + ": ");
-            sleepQuality[i] = getValidInput(scanner);
+            sleepQuality[i] = getValidInput(scanner, 1, 10); // Validate input for sleep quality
         }
 
         // -------------------------------------------------------------
@@ -83,15 +83,15 @@ public class App {
         scanner.close();
     }
 
-    // Helper method to validate input
-    private static double getValidInput(Scanner scanner) {
+    // Helper method to validate input within a range
+    private static double getValidInput(Scanner scanner, double min, double max) {
         double value;
         while (true) {
             value = scanner.nextDouble();
-            if (value >= 0) {
+            if (value >= min && value <= max) {
                 break;
             }
-            System.out.print("Invalid input. Please enter a non-negative value: ");
+            System.out.print("Invalid input. Please enter a value between " + min + " and " + max + ": ");
         }
         return value;
     }
